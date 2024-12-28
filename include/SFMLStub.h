@@ -16,7 +16,7 @@ class SFMLStub {
 
   void addEventHandler(EventHandler* eventHandler);
 
-  void close();
+  void stop();
 
  private:
   const std::string title;
@@ -25,5 +25,5 @@ class SFMLStub {
 
   EventHandler* eventHandler = nullptr;
 
-  bool shouldClose = false;
+  bool shouldStop = false;
 };

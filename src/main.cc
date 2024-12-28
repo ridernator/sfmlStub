@@ -8,7 +8,7 @@ class EV : public EventHandler {
   void newEvent(const sf::Event& event) override {
     if (event.type == sf::Event::KeyReleased) {
       if (event.key.code == sf::Keyboard::Escape) {
-        sfmlStub.close();
+        sfmlStub.stop();
       }
     }
   }
@@ -23,6 +23,8 @@ int main(const int    argc,
 
   EV ev(sfmlStub);
   sfmlStub.addEventHandler(&ev);
+
+  sfmlStub.run();
 
   sfmlStub.run();
 }

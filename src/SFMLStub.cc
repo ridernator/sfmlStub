@@ -12,7 +12,7 @@ SFMLStub::SFMLStub(const std::string& title) : title(title) {
 
 SFMLStub::~SFMLStub() {
   if (window != nullptr) {
-    close();
+    stop();
   }
 }
 
@@ -27,7 +27,7 @@ void SFMLStub::run() {
 
   sf::Event event;
 
-  while ((window->isOpen()) && (!shouldClose)) {
+  while ((window->isOpen()) && (!shouldStop)) {
     while (window->pollEvent(event)) {
       if (eventHandler != nullptr) {
         eventHandler->newEvent(event);
@@ -36,10 +36,12 @@ void SFMLStub::run() {
   }
 
   delete window;
+
+  shouldStop = false;
 }
 
-void SFMLStub::close() {
-  shouldClose = true;
+void SFMLStub::stop() {
+  shouldStop = true;
 }
 
 void SFMLStub::addEventHandler(EventHandler* eventHandler) {
