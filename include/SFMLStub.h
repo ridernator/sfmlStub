@@ -3,16 +3,20 @@
 #include <string>
 
 #include "EventHandler.h"
+#include "GameData.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
 class SFMLStub {
  public:
-  SFMLStub(const std::string& title);
+  SFMLStub(const std::string& title,
+           GameData& gameData);
 
   ~SFMLStub();
 
   void run();
+
+  void draw(const GameData& data);
 
   void addEventHandler(EventHandler* eventHandler);
 
@@ -20,6 +24,8 @@ class SFMLStub {
 
  private:
   const std::string title;
+
+  GameData& gameData;
 
   sf::RenderWindow* window = nullptr;
 

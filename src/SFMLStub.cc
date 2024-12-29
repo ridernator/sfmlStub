@@ -7,7 +7,9 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 
-SFMLStub::SFMLStub(const std::string& title) : title(title) {
+SFMLStub::SFMLStub(const std::string& title,
+                   GameData&          gameData) : title(title),
+                                                  gameData(gameData) {
 }
 
 SFMLStub::~SFMLStub() {
@@ -19,11 +21,9 @@ SFMLStub::~SFMLStub() {
 void SFMLStub::run() {
   window = new sf::RenderWindow(sf::VideoMode::getFullscreenModes()[0], title, sf::Style::Fullscreen);
 
-  sf::View view = window->getDefaultView();
-  view.setRotation(180);
-  window->setView(view);
-
-  window->display();
+  // sf::View view = window->getDefaultView();
+  // view.setRotation(180);
+  // window->setView(view);
 
   sf::Event event;
 
@@ -33,6 +33,10 @@ void SFMLStub::run() {
         eventHandler->newEvent(event);
       }
     }
+
+    window->clear();
+    gameData.draw(*window);
+    window->display();
   }
 
   delete window;
@@ -42,6 +46,10 @@ void SFMLStub::run() {
 
 void SFMLStub::stop() {
   shouldStop = true;
+}
+
+void SFMLStub::draw(const GameData& data) {
+  data.draw(*window);
 }
 
 void SFMLStub::addEventHandler(EventHandler* eventHandler) {
