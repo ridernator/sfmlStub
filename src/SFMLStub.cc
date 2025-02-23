@@ -1,5 +1,6 @@
 #include "SFMLStub.h"
 
+#include <optional>
 #include <string>
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -19,18 +20,18 @@ SFMLStub::~SFMLStub() {
 }
 
 void SFMLStub::run() {
-  window = new sf::RenderWindow(sf::VideoMode::getFullscreenModes()[0], title, sf::Style::Fullscreen);
+  window = new sf::RenderWindow(sf::VideoMode::getFullscreenModes()[0], title, sf::State::Fullscreen);
 
   // sf::View view = window->getDefaultView();
   // view.setRotation(180);
   // window->setView(view);
 
-  sf::Event event;
+  std::optional<sf::Event> event;
 
   while ((window->isOpen()) && (!shouldStop)) {
-    while (window->pollEvent(event)) {
+    while ((event = window->pollEvent()) != std::nullopt) {
       if (eventHandler != nullptr) {
-        eventHandler->newEvent(event);
+        eventHandler->newEvent(event.value());
       }
     }
 

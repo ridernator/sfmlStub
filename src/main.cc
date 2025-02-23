@@ -1,4 +1,5 @@
 #include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Window/Event.hpp>
 #include <cstdlib>
 #include <iostream>
 
@@ -11,8 +12,10 @@ class EV : public EventHandler {
   EV(SFMLStub& sfmlStub) : sfmlStub(sfmlStub) {}
 
   void newEvent(const sf::Event& event) override {
-    if (event.type == sf::Event::KeyReleased) {
-      if (event.key.code == sf::Keyboard::Escape) {
+    if (event.is<sf::Event::KeyReleased>()) {
+      const sf::Event::KeyReleased* krEvent = event.getIf<sf::Event::KeyReleased>();
+
+      if (krEvent->code == sf::Keyboard::Key::Escape) {
         sfmlStub.stop();
       }
     }
@@ -26,7 +29,7 @@ class GD : public GameData {
  public:
   GD() {
     circle.setRadius(50);
-    circle.setPosition(100, 100);
+    circle.setPosition({100, 100});
   }
 
   void draw(sf::RenderWindow& window) const override {
